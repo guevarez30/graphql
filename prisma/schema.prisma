@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model job {
+  id          Int     @id @default(autoincrement())
+  description String?
+  team_id     Int?
+  team        team?   @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model team {
+  id        Int         @id @default(autoincrement())
+  name      String?
+  category  String?
+  job       job[]
+  team_user team_user[]
+}
+
+model team_user {
+  id      Int     @id @default(autoincrement())
+  user_id Int?
+  team_id Int?
+  role    String?
+  team    team?   @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  user    user?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model user {
+  id         Int         @id @default(autoincrement())
+  first_name String?
+  last_name  String?
+  email      String?
+  password   String?
+  team_user  team_user[]
+}
