@@ -27,9 +27,8 @@ export const relationships = {
 
 /* Query */
 export const Query = {
-  jobs: adminAuth((_parent, args, context) =>
-    context.models.jobs.list({ where: args })
-  ),
+  jobs: (_parent, args, context) =>
+    context.models.jobs.list({ where: args }),
 };
 
 /* Mutations */
