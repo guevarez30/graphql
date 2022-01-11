@@ -1,47 +1,29 @@
 import jwt from "jsonwebtoken";
+import { compare } from "../helpers/encryption.js";
 
-/* Please set this in a .env file */
+/* Please use env files for secrets */
 const SECRET = "secret";
-
-export const userAuth = (database) => async (req, res, done) => {
-  const token = req.headers["token"];
-  try {
-    const decoded = jwt.verify(token, SECRET);
-    const [user] = await database["user"].findMany({
-      where: {
-        AND: [{ email: decoded.email }, { password: decoded.password }],
-      },
-    });
-    /* Build out other auth strategies to protect your resolvers */
-    user.isMasterAdmin = user.id === 1;
-    req.user = user;
-    done();
-  } catch (err) {
-    res.status(401).send(err);
-  }
-};
 
 export const logIn = (database) => async (req, res) => {
   const { email, password } = req.body;
-  /* Please use password encryption */
   const [user] = await database["user"].findMany({
     where: {
       AND: {
         email: email,
-        password: password,
       },
     },
   });
 
   if (!user) {
-    res.sendStatus(401);
+    res.status(400).send({ error: "User doesnt exist" });
   } else {
-    const token = jwt.sign(
-      { email: user.email, password: user.password },
-      SECRET,
-      { expiresIn: "10h" }
-    );
-    res.cookie("token", token);
-    res.sendStatus(200);
+    const match = await compare(password, user.password);
+    if (match) {
+      const token = jwt.sign({ email: email }, SECRET, {
+        expiresIn: "10h",
+      });
+      res.cookie("token", token);
+      res.sendStatus(200);
+    } else res.status(401).send({ error: "Unauthroized" });
   }
 };

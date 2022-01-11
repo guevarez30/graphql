@@ -55,8 +55,7 @@ export const relationships = {
 
 /* Query */
 export const Query = {
-  teams: (_parent, args, context) =>
-    context.models.teams.list({ where: args }),
+  teams: (_parent, args, context) => context.models.teams.list({ where: args }),
 };
 
 export const Mutation = {

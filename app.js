@@ -9,7 +9,7 @@ import { schema } from "./schema.js";
 import { database } from "./database.js";
 import { models } from "./context.js";
 /* Middleware */
-import { userAuth, logIn } from "./middleware/auth.js";
+import { logIn } from "./middleware/auth.js";
 import { logger } from "./middleware/logger.js";
 
 /* Express app */
@@ -29,14 +29,12 @@ app.get("*", function (_req, res) {
   res.redirect("/playground");
 });
 
-app.use(userAuth(database));
-
 app.use(
   "/graphql",
-  graphqlHTTP(({ user }, _res) => ({
+  graphqlHTTP(({ headers }, _res) => ({
     schema,
     context: {
-      user: user ?? undefined,
+      token: headers["token"],
       models: models,
     },
     graphiql: true,
