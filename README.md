@@ -10,10 +10,6 @@ This is just an example of how a graphql server could be implemented with user a
 ### Security
 Most mutations/queries are available without authentication required. `users`, `user`, `createTeam` will require authentication.
 
-#### Create User
-
-
-#### Login
 
 ### Auth Wrapper Methods
 Wrappers are a simple way to put simple auth at the top entry level of your resolver nodes.
