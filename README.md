@@ -19,7 +19,7 @@ Most mutations/queries are available without authentication required. `users`, `
 Wrappers are a simple way to put simple auth at the top entry level of your resolver nodes.
 
 #### adminAuth() 
-Simple authWrapper, perform checks on the user or request to determine if the user isMasterAdmin()
+Simple authWrapper, hypothetical master admin auth to allow all view access
 ```javascript
   users: adminAuth((_parent, args, context) =>
     context.models.users.list({ where: args })
