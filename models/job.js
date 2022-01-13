@@ -1,15 +1,15 @@
-export const generateJobModel = (database) => {
-  const Job = database["job"];
-  return {
-    getById: (id) =>
-      Job.findUnique({
-        where: {
-          id: id,
-        },
-      }),
+export const generateJobModel = ( database ) => {
+    const Job = database[ "job" ];
+    return {
+        create: ( params ) => Job.create({ data: params }),
 
-    list: (query) => Job.findMany(query),
+        getById: ( id ) =>
+            Job.findUnique({
+                where: {
+                    id: id
+                }
+            }),
 
-    create: (params) => Job.create({ data: params }),
-  };
+        list: ( query ) => Job.findMany( query )
+    };
 };

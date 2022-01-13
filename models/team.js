@@ -1,15 +1,15 @@
-export const generateTeamModel = (database) => {
-  const Team = database["team"];
-  return {
-    getById: (id) =>
-      Team.findUnique({
-        where: {
-          id: id,
-        },
-      }),
+export const generateTeamModel = ( database ) => {
+    const Team = database[ "team" ];
+    return {
+        create: ( params ) => Team.create({ data: params }),
 
-    list: (query) => Team.findMany(query),
+        getById: ( id ) =>
+            Team.findUnique({
+                where: {
+                    id: id
+                }
+            }),
 
-    create: (params) => Team.create({ data: params }),
-  };
+        list: ( query ) => Team.findMany( query )
+    };
 };
