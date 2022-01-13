@@ -1,5 +1,3 @@
-import { adminAuth } from "../helpers/authWrapper.js";
-
 /* import business logic */
 import { createTeam } from "../controllers/team.js";
 
@@ -24,40 +22,41 @@ extend type Mutation{
 
 /* Relationship Mapping */
 export const relationships = {
-  Team: {
-    users: (parent, args, context) =>
-      context.models.teamUsers
-        .list({
-          where: {
-            team_id: parent.id,
-          },
-        })
-        .then((teamUsers) =>
-          context.models.users.list({
-            where: {
-              id: {
-                in: teamUsers.map((x) => x.user_id),
-              },
-              ...args,
-            },
-          })
-        ),
+    Team: {
+        jobs: (parent, args, context) =>
+            context.models.jobs.list({
+                where: {
+                    team_id: parent.id,
+                    ...args
+                }
+            }),
 
-    jobs: (parent, args, context) =>
-      context.models.jobs.list({
-        where: {
-          team_id: parent.id,
-          ...args,
-        },
-      }),
-  },
+        users: (parent, args, context) =>
+            context.models.teamUsers
+                .list({
+                    where: {
+                        team_id: parent.id
+                    }
+                })
+                .then((teamUsers) =>
+                    context.models.users.list({
+                        where: {
+                            id: {
+                                in: teamUsers.map((x) => x.user_id)
+                            },
+                            ...args
+                        }
+                    })
+                )
+    }
 };
 
 /* Query */
 export const Query = {
-  teams: (_parent, args, context) => context.models.teams.list({ where: args }),
+    teams: (_parent, args, context) =>
+        context.models.teams.list({ where: args })
 };
 
 export const Mutation = {
-  createTeam: createTeam,
+    createTeam: createTeam
 };

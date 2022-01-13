@@ -27,26 +27,26 @@ type Mutation {
 
 /* I really dislike how I am doing this. Any recomendations ? */
 const resolvers = {
-  Query: {
-    graph: () => "Welcome to graphql api",
-    ...jobs.Query,
-    ...teams.Query,
-    ...users.Query,
-  },
-  Mutation: {
-    graphCreate: () => "Create awesome mutations",
-    ...users.Mutation,
-    ...teams.Mutation,
-    ...jobs.Mutation,
-    ...teamUsers.Mutation,
-  },
-  /* Relationship Mappings */
-  ...jobs.relationships,
-  ...teams.relationships,
-  ...users.relationships,
+    Mutation: {
+        graphCreate: () => "Create awesome mutations",
+        ...users.Mutation,
+        ...teams.Mutation,
+        ...jobs.Mutation,
+        ...teamUsers.Mutation
+    },
+    Query: {
+        graph: () => "Welcome to graphql api",
+        ...jobs.Query,
+        ...teams.Query,
+        ...users.Query
+    },
+    /* Relationship Mappings */
+    ...jobs.relationships,
+    ...teams.relationships,
+    ...users.relationships
 };
 
 export const schema = makeExecutableSchema({
-  resolvers,
-  typeDefs,
+    resolvers,
+    typeDefs
 });

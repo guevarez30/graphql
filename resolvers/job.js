@@ -1,4 +1,4 @@
-import { belongsToTeam, adminAuth } from "../helpers/authWrapper.js";
+import { belongsToTeam } from "../helpers/authWrapper.js";
 
 /* Type Def */
 export const typeDef = `
@@ -19,20 +19,20 @@ extend type Mutation {
 
 /* Relationship Mapping */
 export const relationships = {
-  Job: {
-    team: (parent, _args, context) =>
-      context.models.teams.getById(parent.team_id),
-  },
+    Job: {
+        team: (parent, _args, context) =>
+            context.models.teams.getById(parent.team_id)
+    }
 };
 
 /* Query */
 export const Query = {
-  jobs: (_parent, args, context) => context.models.jobs.list({ where: args }),
+    jobs: (_parent, args, context) => context.models.jobs.list({ where: args })
 };
 
 /* Mutations */
 export const Mutation = {
-  createJob: belongsToTeam((_parent, args, context) =>
-    context.models.jobs.create(args)
-  ),
+    createJob: belongsToTeam((_parent, args, context) =>
+        context.models.jobs.create(args)
+    )
 };

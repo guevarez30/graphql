@@ -25,33 +25,33 @@ extend type Mutation{
 
 /* Relationship Mapping */
 export const relationships = {
-  User: {
-    teams: (parent, args, context) =>
-      context.models.teamUsers
-        .list({ where: { user_id: parent.id } })
-        .then((team_users) =>
-          context.models.teams.list({
-            where: {
-              id: {
-                in: team_users.map((x) => x.team_id),
-              },
-            },
-          })
-        ),
-  },
+    User: {
+        teams: (parent, args, context) =>
+            context.models.teamUsers
+                .list({ where: { user_id: parent.id } })
+                .then((team_users) =>
+                    context.models.teams.list({
+                        where: {
+                            id: {
+                                in: team_users.map((x) => x.team_id)
+                            }
+                        }
+                    })
+                )
+    }
 };
 
 /* Query */
 export const Query = {
-  users: adminAuth((_parent, args, context) =>
-    context.models.users.list({ where: args })
-  ),
+    user: userAuth((_parent, _args, context) =>
+        context.models.users.getById(context.user.id)
+    ),
 
-  user: userAuth((_parent, _args, context) =>
-    context.models.users.getById(context.user.id)
-  ),
+    users: adminAuth((_parent, args, context) =>
+        context.models.users.list({ where: args })
+    )
 };
 
 export const Mutation = {
-  createUser: createUser,
+    createUser: createUser
 };

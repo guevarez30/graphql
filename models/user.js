@@ -1,15 +1,15 @@
-export const generateUserModel = (database) => {
-  const User = database["user"];
-  return {
-    getById: (id) =>
-      User.findUnique({
-        where: {
-          id: id,
-        },
-      }),
+export const generateUserModel = ( database ) => {
+    const User = database[ "user" ];
+    return {
+        create: ( params ) => User.create({ data: params }),
 
-    list: (query) => User.findMany(query),
+        getById: ( id ) =>
+            User.findUnique({
+                where: {
+                    id: id
+                }
+            }),
 
-    create: (params) => User.create({ data: params }),
-  };
+        list: ( query ) => User.findMany( query )
+    };
 };
