@@ -2,6 +2,7 @@ import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import cors from "cors";
 import PlayGround from "graphql-playground-middleware-express";
+
 const expressPlayground = PlayGround.default;
 
 /* Custom Modules */
@@ -26,20 +27,20 @@ app.post("/login", logIn(database));
 app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
 app.get("*", function (_req, res) {
-  res.redirect("/playground");
+    res.redirect("/playground");
 });
 
 app.use(
-  "/graphql",
-  graphqlHTTP(({ headers }, _res) => ({
-    schema,
-    context: {
-      token: headers["token"],
-      models: models,
-    },
-    graphiql: true,
-    customFormatErrorFn: (err) => ({ message: err.message }),
-  }))
+    "/graphql",
+    graphqlHTTP(({ headers }) => ({
+        context: {
+            models: models,
+            token: headers["token"]
+        },
+        customFormatErrorFn: (err) => ({ message: err.message }),
+        graphiql: true,
+        schema
+    }))
 );
 
 const port = 4000;

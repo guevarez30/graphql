@@ -18,5 +18,5 @@ extend type Mutation{
 `;
 
 export const Mutation = {
-  addUserToTeam: belongsToTeam(createTeamUser),
+    addUserToTeam: belongsToTeam(createTeamUser)
 };

@@ -7,8 +7,8 @@ import { generateTeamUserModel } from "./models/teamUser.js";
 import { generateJobModel } from "./models/job.js";
 
 export const models = {
-  teams: generateTeamModel(database),
-  teamUsers: generateTeamUserModel(database),
-  users: generateUserModel(database),
-  jobs: generateJobModel(database),
+    jobs:      generateJobModel( database ),
+    teamUsers: generateTeamUserModel( database ),
+    teams:     generateTeamModel( database ),
+    users:     generateUserModel( database )
 };
