@@ -1,5 +1,6 @@
 # graphql
-This is just an example of how a graphql server could be implemented with user authentication and resolver authentication. **PASSWORDS** are not encrypted to keep things easy. 
+This is just an example of how a graphql server could be implemented with user authentication and resolver authentication.
+
 
 ## Getting Started
 1. clone down repository
