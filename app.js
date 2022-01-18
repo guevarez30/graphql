@@ -32,15 +32,19 @@ app.get("*", function (_req, res) {
 
 app.use(
     "/graphql",
-    graphqlHTTP(({ headers }) => ({
-        context: {
-            models: models,
-            token: headers["token"]
-        },
-        customFormatErrorFn: (err) => ({ message: err.message }),
-        graphiql: true,
-        schema
-    }))
+    graphqlHTTP(({ headers }) => {
+        const authHeader = headers.authorization;
+        const token = authHeader && authHeader.split(" ")[1];
+        return {
+            context: {
+                models: models,
+                token: token
+            },
+            customFormatErrorFn: (err) => ({ message: err.message }),
+            graphiql: true,
+            schema
+        };
+    })
 );
 
 const port = 4000;

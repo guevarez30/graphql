@@ -13,6 +13,12 @@ type User {
   teams: [Team]
 }
 
+type PublicUser {
+    first_name: String
+    last_name: String
+    email: String
+  }  
+
 extend type Query {
   users: [User!]!
   user: User

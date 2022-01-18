@@ -8,12 +8,6 @@ import * as users from "./resolvers/users.js";
 
 /* Type definitions */
 const typeDefs = `
-type PublicUser {
-  first_name: String
-  last_name: String
-  email: String
-}
-
 type Query { 
   graph: String 
 }

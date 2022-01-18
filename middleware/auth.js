@@ -21,8 +21,11 @@ export const logIn = (database) => async (req, res) => {
             const token = jwt.sign({ email: email }, SECRET, {
                 expiresIn: "10h"
             });
-            res.cookie("token", token, { httpOnly: true });
-            res.sendStatus(200);
-        } else res.status(401).send({ error: "Unauthroized" });
+            const auth = {
+                token: token,
+                type: "Bearer"
+            };
+            res.json(auth);
+        } else res.status(401).send({ error: "Unauthorized" });
     }
 };
