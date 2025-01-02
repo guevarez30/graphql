@@ -5,8 +5,9 @@ This is just an example of how a graphql server could be implemented with user a
 ## Getting Started
 1. clone down repository
 2. ```$ npm install```
-3. ```$ npm run start:graph```
-4. Go to `localhost:4000`
+3. ```$ npx prisma generate```
+4. ```$ npm run start:graph```
+5. Go to `localhost:4000`
 
 ## Security
 Most mutations/queries are available without authentication required. `users`, `user`, `createTeam` will require authentication in this example project.
